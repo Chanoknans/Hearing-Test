@@ -159,18 +159,12 @@ class _HistoryPageState extends State<HistoryPage> {
                       builder: (context) => Audiogram(
                             result: history2,
                             result2: history,
-                            sumall: history2[0] +
-                                history2[1] +
+                            sumall: history2[1] +
                                 history2[2] +
                                 history2[3] +
-                                history2[4] +
-                                history2[5] +
-                                history[0] +
                                 history[1] +
                                 history[2] +
-                                history[3] +
-                                history[4] +
-                                history[5],
+                                history[3],
                           )));
             },
           ) /*Text(

@@ -16,7 +16,7 @@ import 'FreqBox.dart';
 import 'dBbox.dart';
 
 List<int> _count = [0, 0, 0, 0, 0, 0];
-List<int> _round = [16, 10, 16, 13, 8, 19];
+List<int> _round = [16, 10, 16, 10, 13, 24];
 double _value = 0;
 List<double> _vol = [
   3.191317430952741e-05,

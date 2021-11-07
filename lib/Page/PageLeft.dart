@@ -20,7 +20,7 @@ import 'FreqBox.dart';
 import 'dBbox.dart';
 
 List<int> _count = [0, 0, 0, 0, 0, 0];
-List<int> _round = [16, 10, 16, 13, 8, 19];
+List<int> _round = [16, 10, 6, 13, 8, 19];
 double _value = 0;
 
 List<double> _vol = [
@@ -520,18 +520,12 @@ class _ManualPageState extends State<ManualPageL> {
                           return Audiogram(
                               result: widget.resultR,
                               result2: _count,
-                              sumall: (widget.resultR![0] +
-                                  widget.resultR![1] +
+                              sumall: (widget.resultR![1] +
                                   widget.resultR![2] +
                                   widget.resultR![3] +
-                                  widget.resultR![4] +
-                                  widget.resultR![5] +
-                                  _count[0] +
                                   _count[1] +
                                   _count[2] +
-                                  _count[3] +
-                                  _count[4] +
-                                  _count[5]));
+                                  _count[3]));
                           //return ManualPage();
                         }));
                       },

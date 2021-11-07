@@ -307,7 +307,7 @@ class _AudiogramState extends State<Audiogram> {
                             padding: const EdgeInsets.only(
                                 top: 0.5, left: 20, right: 1),
                             child: Text(
-                              '${((widget.result![0] + widget.result![1] + widget.result![2] + widget.result![3] + widget.result![4] + widget.result![5]) / 6).round()}',
+                              '${((widget.result![1] + widget.result![2] + widget.result![3]) / 3).round()}',
                               style: TextStyle(
                                   color: Myconstant.gray,
                                   fontSize: 16,
@@ -386,7 +386,7 @@ class _AudiogramState extends State<Audiogram> {
                             padding: const EdgeInsets.only(
                                 top: 0.5, left: 20, right: 1),
                             child: Text(
-                              '${((widget.result2![0] + widget.result2![1] + widget.result2![2] + widget.result2![3] + widget.result2![4] + widget.result2![5]) / 6).round()}',
+                              '${((widget.result2![1] + widget.result2![2] + widget.result2![3]) / 3).round()}',
                               style: TextStyle(
                                   color: Myconstant.gray,
                                   fontSize: 16,
@@ -470,7 +470,7 @@ class _AudiogramState extends State<Audiogram> {
                                     ),
                                     child: Row(
                                       children: <Widget>[
-                                        if ((widget.sumall! / 12) < 26)
+                                        if ((widget.sumall! / 6) < 26)
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 3.2, left: 1, right: 0),
@@ -483,8 +483,8 @@ class _AudiogramState extends State<Audiogram> {
                                               ),
                                             ),
                                           )
-                                        else if ((widget.sumall! / 12) >= 26 &&
-                                            (widget.sumall! / 12) < 41)
+                                        else if ((widget.sumall! / 6) >= 26 &&
+                                            (widget.sumall! / 6) < 41)
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 3.2, left: 1, right: 0),
@@ -496,8 +496,8 @@ class _AudiogramState extends State<Audiogram> {
                                                   fontWeight: FontWeight.w600),
                                             ),
                                           )
-                                        else if ((widget.sumall! / 12) >= 41 &&
-                                            (widget.sumall! / 12) < 61)
+                                        else if ((widget.sumall! / 6) >= 41 &&
+                                            (widget.sumall! / 6) < 61)
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 3.2, left: 1, right: 0),
@@ -509,8 +509,8 @@ class _AudiogramState extends State<Audiogram> {
                                                   fontWeight: FontWeight.w600),
                                             ),
                                           )
-                                        else if ((widget.sumall! / 12) >= 61 &&
-                                            (widget.sumall! / 12) < 81)
+                                        else if ((widget.sumall! / 6) >= 61 &&
+                                            (widget.sumall! / 6) < 81)
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 3.2, left: 1, right: 0),
@@ -553,7 +553,7 @@ class _AudiogramState extends State<Audiogram> {
                                     ),
                                     child: Column(
                                       children: <Widget>[
-                                        if ((widget.sumall! / 12) < 26)
+                                        if ((widget.sumall! / 6) < 26)
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 2, left: 5, right: 0),
@@ -568,8 +568,8 @@ class _AudiogramState extends State<Audiogram> {
                                                   fontFamily: 'Prompt'),
                                             ),
                                           )
-                                        else if ((widget.sumall! / 12) >= 26 &&
-                                            (widget.sumall! / 12) < 41)
+                                        else if ((widget.sumall! / 6) >= 26 &&
+                                            (widget.sumall! / 6) < 41)
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 2, left: 5, right: 0),
@@ -584,8 +584,8 @@ class _AudiogramState extends State<Audiogram> {
                                                   fontFamily: 'Prompt'),
                                             ),
                                           )
-                                        else if ((widget.sumall! / 12) >= 41 &&
-                                            (widget.sumall! / 12) < 61)
+                                        else if ((widget.sumall! / 6) >= 41 &&
+                                            (widget.sumall! / 6) < 61)
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 2, left: 5, right: 0),
@@ -600,8 +600,8 @@ class _AudiogramState extends State<Audiogram> {
                                                   fontFamily: 'Prompt'),
                                             ),
                                           )
-                                        else if ((widget.sumall! / 12) >= 61 &&
-                                            (widget.sumall! / 12) < 81)
+                                        else if ((widget.sumall! / 6) >= 61 &&
+                                            (widget.sumall! / 6) < 81)
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 top: 2, left: 5, right: 0),
