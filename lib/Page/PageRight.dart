@@ -16,7 +16,7 @@ import 'FreqBox.dart';
 import 'dBbox.dart';
 
 List<int> _count = [0, 0, 0, 0, 0, 0];
-List<int> _round = [16, 10, 16, 10, 13, 24];
+List<int> _round = [11, 5, 11, 13, 10, 22];
 double _value = 0;
 List<double> _vol = [
   3.191317430952741e-05,
@@ -183,7 +183,7 @@ class _ManualPageState extends State<ManualPageR> {
   void _playsound(double v) {
     setState(() async {
       await audioPlayer.pause();
-      await audioPlayer.setVolume(v); //_vol[j]
+      audioPlayer.setVolume(v); //_vol[j]
       print('this value is $v');
       await audioPlayer.play();
       //await audioPlayer.playlistPlayAtIndex(1);

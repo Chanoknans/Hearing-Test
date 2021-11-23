@@ -20,7 +20,7 @@ import 'FreqBox.dart';
 import 'dBbox.dart';
 
 List<int> _count = [0, 0, 0, 0, 0, 0];
-List<int> _round = [16, 10, 6, 13, 8, 19];
+List<int> _round = [6, 2, 10, 3, 8, 19];
 double _value = 0;
 
 List<double> _vol = [
@@ -141,13 +141,8 @@ int j = _round[0];
 List<String> freqs = ['250', '500', '1000', '2000', '4000', '8000'];
 final assetsAudioplayer = AssetsAudioPlayer();
 final fieldText = TextEditingController();
-//int len_freqs = freqs.length;
-
-//AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
-//AudioCache audioCache = new AudioCache(fixedPlayer: advancedPlayer);
 
 class ManualPageL extends StatefulWidget {
-  //ManualPageL({Key? key}) : super(key: key);
   final List<int>? resultR;
   final List<int>? resultL;
   ManualPageL({Key? key, @required this.resultR, this.resultL})
@@ -226,8 +221,8 @@ class _ManualPageState extends State<ManualPageL> {
   int? todays;
   String? Now;
   String? _userimage;
-  List<String>? meen = [];
-  List<String>? Nows = [];
+  List<DateTime>? meen = [];
+  List<DateTime>? Nows = [];
   Profile profile = Profile(
       email: '',
       password: '',
@@ -249,7 +244,7 @@ class _ManualPageState extends State<ManualPageL> {
     });
   }
 
-  var nows = DateTime.now().toString();
+  var nows = DateTime.now();
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
 
   @override
@@ -350,7 +345,7 @@ class _ManualPageState extends State<ManualPageL> {
                           } else {
                             await audioPlayer.next();
                             _value = _vol[_round[i]];
-                            j = _round[i];
+                            j = _round[i] - 5;
                             //_value = -0.0010091831818407819;
                             _count[i] = -5;
                             _increase();
@@ -513,8 +508,12 @@ class _ManualPageState extends State<ManualPageL> {
                             .collection('users')
                             .doc(_uid)
                             .collection('history')
-                            .doc(nows)
-                            .set({'Left': _count, 'Right': widget.resultR});
+                            .doc()
+                            .set({
+                          'Left': _count,
+                          'Right': widget.resultR,
+                          'created_date': nows
+                        });
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return Audiogram(

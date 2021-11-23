@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_brace_in_string_interps, unused_local_variable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +21,11 @@ class _HistoryPageState extends State<HistoryPage> {
 
   int i = 0;
   String _uid = '';
-  List<String> today = [];
+  late Timestamp today;
   List<int> history = [];
   List<int> history2 = [];
+  late DateTime date;
+  List<DateTime> time = [];
   //String? meen;
 
   void initState() {
@@ -31,52 +35,84 @@ class _HistoryPageState extends State<HistoryPage> {
 
   void getdata() async {
     // ignore: unused_local_variable
+
     User? user = auth.currentUser;
     _uid = user!.uid;
-    print('user.email ${user.email}');
-
-    final DocumentSnapshot userDoc =
-        await FirebaseFirestore.instance.collection('users').doc(_uid).get();
-
-    await Future.delayed(const Duration(microseconds: 1));
-    setState(() {
-      today = List.from(userDoc.get('today'));
-    });
-    //meen = today![1];
-  }
-
-  Future getdata2(int value) async {
-    User? user = auth.currentUser;
-    _uid = user!.uid;
-    final DocumentSnapshot userDoc2 = await FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('users')
         .doc(_uid)
         .collection('history')
-        .doc(today[value])
-        .get();
-    setState(() {
-      history = List.from(userDoc2.get('Left'));
-      history2 = List.from(userDoc2.get('Right'));
-      print('my Left ${history}');
-      print('my Right ${history2}');
+        .get()
+        .then(
+      (value) {
+        setState(
+          () {
+            if (value.docs.length > 0) {
+              value.docs.forEach(
+                (element) {
+                  FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(_uid)
+                      .collection('history')
+                      .doc(element.id)
+                      .get();
+                  today = element.get('created_date');
+                  print('object ${today}');
+                  DateTime date = today.toDate();
+                  time.add(date);
+                },
+              );
+            }
+            print('today is ${time}');
+          },
+        );
+      },
+    );
+  }
+
+  Future getdata2(DateTime pickedDate) async {
+    User? user = auth.currentUser;
+    _uid = user!.uid;
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(_uid)
+        .collection('history')
+        .where("created_date", isEqualTo: pickedDate)
+        .get()
+        .then((userDoc2) {
+      setState(() {
+        if (userDoc2.docs.length > 0) {
+          userDoc2.docs.forEach((element) {
+            history = List.from(element.get('Left'));
+            history2 = List.from(element.get('Right'));
+            print('my Left ${history}');
+            print('my Right ${history2}');
+          });
+        }
+      });
     });
   }
 
-  Future getdata3(int value) async {
-    for (i; i < value; i++) {
-      User? user = auth.currentUser;
-      _uid = user!.uid;
-      final DocumentReference<Map<String, dynamic>> userDoc3 = FirebaseFirestore
-          .instance
-          .collection('users')
-          .doc(_uid)
-          .collection('history')
-          .doc(today[i]);
-
-      setState(() {
-        userDoc3.delete();
-      });
-    }
+  Future getdata3() async {
+    User? user = auth.currentUser;
+    _uid = user!.uid;
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(_uid)
+        .collection('history')
+        .get()
+        .then((value) {
+      if (value.docs.length > 0) {
+        value.docs.forEach((element) {
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(_uid)
+              .collection('history')
+              .doc(element.id)
+              .delete();
+        });
+      }
+    });
   }
 
   @override
@@ -120,9 +156,9 @@ class _HistoryPageState extends State<HistoryPage> {
                           fontSize: 18, color: Color.fromRGBO(1, 1, 1, 1)),
                     ),
                     onPressed: () async {
-                      print(today.length);
+                      //print(today.length);
 
-                      getdata3(today.length);
+                      getdata3();
                       await FirebaseFirestore.instance
                           .collection('users')
                           .doc(_uid)
@@ -137,65 +173,40 @@ class _HistoryPageState extends State<HistoryPage> {
         ],
       ),
       body: ListView.builder(
-        itemCount: today.length,
+        itemCount: time.length,
         itemBuilder: (context, index) {
           return ListTile(
-              title: TextButton(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'การทดสอบวันที่ ${today[index]}',
-                style: TextStyle(
-                    color: Myconstant.gray, fontFamily: 'Prompt', fontSize: 15),
-                //textAlign: TextAlign.start,
+            title: TextButton(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'การทดสอบวันที่ ${time[index]}',
+                  style: TextStyle(
+                      color: Myconstant.gray,
+                      fontFamily: 'Prompt',
+                      fontSize: 15),
+                  //textAlign: TextAlign.start,
+                ),
               ),
+              onPressed: () async {
+                await getdata2(time[index]);
+                //Text('${history[index]}' + '${history2[index]}');
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Audiogram(
+                              result: history2,
+                              result2: history,
+                              sumall: history2[1] +
+                                  history2[2] +
+                                  history2[3] +
+                                  history[1] +
+                                  history[2] +
+                                  history[3],
+                            )));
+              },
             ),
-            onPressed: () async {
-              await getdata2(index);
-              //Text('${history[index]}' + '${history2[index]}');
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Audiogram(
-                            result: history2,
-                            result2: history,
-                            sumall: history2[1] +
-                                history2[2] +
-                                history2[3] +
-                                history[1] +
-                                history[2] +
-                                history[3],
-                          )));
-            },
-          ) /*Text(
-              'การทดสอบวันที่ ${today![index]}',
-              style: TextStyle(color: Myconstant.gray, fontFamily: 'Prompt'),
-            ),*/
-              /*onTap: () {
-              getdata2(index);
-              Text('${history![index]}');
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) {
-                  return Audiogram(
-                    result: history2!,
-                    result2: history!,
-                    sumall: history2![0] +
-                        history2![1] +
-                        history2![2] +
-                        history2![3] +
-                        history2![4] +
-                        history2![5] +
-                        history![0] +
-                        history![1] +
-                        history![2] +
-                        history![3] +
-                        history![4] +
-                        history![5],
-                  );
-                },
-              ));
-            },*/
-              );
+          );
         },
       ),
     );
