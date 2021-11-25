@@ -507,7 +507,7 @@ class _ManualPageState extends State<ManualPageL> {
                         await FirebaseFirestore.instance
                             .collection('users')
                             .doc(_uid)
-                            .collection('history')
+                            .collection('audiogram_history')
                             .doc()
                             .set({
                           'Left': _count,

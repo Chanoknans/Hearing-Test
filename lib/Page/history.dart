@@ -41,7 +41,7 @@ class _HistoryPageState extends State<HistoryPage> {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(_uid)
-        .collection('history')
+        .collection('audiogram_history')
         .get()
         .then(
       (value) {
@@ -53,7 +53,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   FirebaseFirestore.instance
                       .collection('users')
                       .doc(_uid)
-                      .collection('history')
+                      .collection('audiogram_history')
                       .doc(element.id)
                       .get();
                   today = element.get('created_date');
@@ -76,7 +76,7 @@ class _HistoryPageState extends State<HistoryPage> {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(_uid)
-        .collection('history')
+        .collection('audiogram_history')
         .where("created_date", isEqualTo: pickedDate)
         .get()
         .then((userDoc2) {
@@ -99,7 +99,7 @@ class _HistoryPageState extends State<HistoryPage> {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(_uid)
-        .collection('history')
+        .collection('audiogram_history')
         .get()
         .then((value) {
       if (value.docs.length > 0) {
@@ -107,7 +107,7 @@ class _HistoryPageState extends State<HistoryPage> {
           FirebaseFirestore.instance
               .collection('users')
               .doc(_uid)
-              .collection('history')
+              .collection('audiogram_history')
               .doc(element.id)
               .delete();
         });
@@ -190,7 +190,7 @@ class _HistoryPageState extends State<HistoryPage> {
               ),
               onPressed: () async {
                 await getdata2(time[index]);
-                //Text('${history[index]}' + '${history2[index]}');
+
                 Navigator.push(
                     context,
                     MaterialPageRoute(
